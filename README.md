@@ -7,23 +7,23 @@
   * and the [usual Symfony application requirements][1].
 
 ## Create environnement 
-Local env for recette and production is create by Vagrant. 
-For create env : 
+The local environments for recette and production are created by Vagrant. 
+To create the environment:
 ```bash
 $ vagrant up
 ```
-For login in recette env :
+To log in the recette env:
 ```bash
 $ vagrant ssh recette
 ```
-For login in production env :
+To log in the production env :
 ```bash
 $ vagrant ssh production
 ```
 
 ## Installation
 
-Install deps : 
+Install dependancies : 
 
 ```bash
 $ composer install -n 
