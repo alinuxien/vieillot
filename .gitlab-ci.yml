@@ -9,6 +9,7 @@ dependancies:
   script:
     - composer update || true
   artifacts:
+    untracked: true
     paths:
       - .
       
