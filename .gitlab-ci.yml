@@ -12,7 +12,10 @@ dep:
   tags:
     - shell
   script:
-    - composer update || true
+   - sed -i 's/APP_ENV=dev/APP_ENV=prod/g'
+   - sed -i 's/APP_DEBUG=1/APP_DEBUG=0/g' 
+   - composer update --no-dev || true
+   - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
   artifacts:
     untracked: true
     paths:
@@ -23,7 +26,7 @@ test:
   tags:
     - shell
   script:
-    - php bin/phpunit
+   - php bin/phpunit
 
 build:
   stage: build
