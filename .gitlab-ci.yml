@@ -17,5 +17,5 @@ test:
   tags:
     - shell
   script:
-    - vendor/bin/phpunit
+    - ./vendor/bin/phpunit
 
