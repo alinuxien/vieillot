@@ -1,6 +1,6 @@
 stages:
   - dependancies
-
+  - test
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
 
@@ -10,10 +10,13 @@ dependancies:
     - shell
   script:
       - composer update || true
-      - composer require symfony/http-kernel:4.4.13 --update-with-all-dependencies
-      - composer update
   artifacts:
     paths:
       - composer_deps
       
-        
+test:
+  stage: test
+  tags:
+    - shell
+  script:
+      - vendor/bin/phpunit
