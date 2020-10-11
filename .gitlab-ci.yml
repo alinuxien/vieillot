@@ -12,10 +12,7 @@ dep:
   tags:
     - shell
   script:
-   - sed -i 's/APP_ENV=dev/APP_ENV=prod/g' .env 
-   - sed -i 's/APP_DEBUG=1/APP_DEBUG=0/g' .env
-   - composer update --no-dev || true
-   - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+    - composer update || true
   artifacts:
     untracked: true
     paths:
@@ -35,6 +32,10 @@ build:
   before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
+    - sed -i 's/APP_ENV=dev/APP_ENV=prod/g' .env 
+    - sed -i 's/APP_DEBUG=1/APP_DEBUG=0/g' .env
+    - composer update --no-dev || true
+    - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
