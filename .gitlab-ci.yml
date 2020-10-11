@@ -2,6 +2,7 @@ stages:
   - dep
   - test
   - build
+  - deploy
 
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
@@ -33,4 +34,33 @@ build:
   script:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
+
+deploy_recette:
+  stage: deploy 
+  tags:
+    - shell
+  script:
+    - ssh vagrant@recette "docker stop recette" || true
+    - ssh vagrant@recette "docker rm recette" || true
+    - ssh vagrant@recette "docker system prune -f -a --volumes" || true
+    - ssh vagrant@recette "docker pull $IMAGE_TAG && docker run -d -p 8000:8000 --name recette $IMAGE_TAG"
+  environment:
+    name: recette
+    url: http://localhost:8010/
+
+deploy_production:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - ssh vagrant@production "docker stop prod" || true
+    - ssh vagrant@production "docker rm prod" || true
+    - ssh vagrant@production "docker system prune -f -a --volumes" || true
+    - ssh vagrant@production "docker pull $IMAGE_TAG && docker run -d -p 8000:8000 --name prod $IMAGE_TAG"
+  environment:
+    name: production
+    url: http://localhost:8081/
+  only:
+    - master
+  when: manual
 
