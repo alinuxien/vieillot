@@ -9,6 +9,7 @@ dependancies:
   tags:
     - shell
   script:
+      - composer require symfony/http-kernel:4.4.13
       - composer update
   artifacts:
     paths:
