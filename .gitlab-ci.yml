@@ -8,7 +8,6 @@ dependancies:
     - shell
   script:
     - composer update || true
-    - ls -la 
   artifacts:
     paths:
       - .
@@ -18,6 +17,5 @@ test:
   tags:
     - shell
   script:
-    - cd dev
     - vendor/bin/phpunit
 
