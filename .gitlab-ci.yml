@@ -1,15 +1,14 @@
 stages:
   - dependancies
   - test
-variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
 
 dependancies:
   stage: dependancies
   tags:
     - shell
   script:
-      - composer update
+    - composer update
+    - ls -la 
   artifacts:
     paths:
       - dev
