@@ -9,7 +9,7 @@ dependancies:
   tags:
     - shell
   script:
-    - composer install -n
+      - composer update
   artifacts:
     paths:
       - composer_deps
