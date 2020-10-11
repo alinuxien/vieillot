@@ -1,9 +1,9 @@
 stages:
-  - dependancies
+  - dep
   - test
 
-dependancies:
-  stage: dependancies
+dep:
+  stage: dep
   tags:
     - shell
   script:
@@ -19,4 +19,5 @@ test:
     - shell
   script:
     - ./vendor/bin/phpunit
-
+  dependencies:
+    - dep
