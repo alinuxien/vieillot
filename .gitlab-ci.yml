@@ -11,7 +11,7 @@ dependancies:
     - ls -la 
   artifacts:
     paths:
-      - dev
+      - .
       
 test:
   stage: test
