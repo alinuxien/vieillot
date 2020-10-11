@@ -18,6 +18,7 @@ test:
   tags:
     - shell
   script:
+    - ls -la
     - ./vendor/bin/phpunit
   dependencies:
     - dep
