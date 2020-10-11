@@ -12,11 +12,13 @@ dependancies:
       - composer update || true
   artifacts:
     paths:
-      - composer_deps
+      - dev
       
 test:
   stage: test
   tags:
     - shell
   script:
-      - vendor/bin/phpunit
+    - cd dev
+    - vendor/bin/phpunit
+
