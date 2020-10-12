@@ -6,9 +6,6 @@ stages:
 
 variables:
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
-  CONTAINER_DATA_DIR: /app/myapp/data
-  RECETTE_DATA_DIR: /home/vagrant/recette
-  PROD_DATA_DIR: /home/vagrant/production
 
 dep:
   stage: dep
@@ -50,7 +47,7 @@ deploy_recette:
     - ssh vagrant@recette "docker stop recette" || true
     - ssh vagrant@recette "docker rm recette" || true
     - ssh vagrant@recette "docker system prune -f -a --volumes" || true
-    - ssh vagrant@recette "docker pull $IMAGE_TAG && docker run -d --restart always -v $RECETTE_DATA_DIR:$CONTAINER_DATA_DIR -p 8000:8000 --name recette $IMAGE_TAG"
+    - ssh vagrant@recette "docker pull $IMAGE_TAG && docker run -d --restart always -p 8000:8000 --name recette $IMAGE_TAG"
   environment:
     name: recette
     url: http://localhost:8010/
@@ -63,7 +60,7 @@ deploy_production:
     - ssh vagrant@production "docker stop prod" || true
     - ssh vagrant@production "docker rm prod" || true
     - ssh vagrant@production "docker system prune -f -a --volumes" || true
-    - ssh vagrant@production "docker pull $IMAGE_TAG && docker run -d --restart always -v PRODUCTION_DATA_DIR:$CONTAINER_DATA_DIR -p 8000:8000 --name prod $IMAGE_TAG"
+    - ssh vagrant@production "docker pull $IMAGE_TAG && docker run -d --restart always -p 8000:8000 --name prod $IMAGE_TAG"
   environment:
     name: production
     url: http://localhost:8081/
