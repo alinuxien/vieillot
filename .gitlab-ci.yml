@@ -15,7 +15,7 @@ dep:
   tags:
     - shell
   script:
-    - COMPOSER_MEMORY_LIMIT=4G composer update --no-dev --prefer-dist || true
+    - composer update --prefer-dist || true
   artifacts:
     untracked: true
     paths:
