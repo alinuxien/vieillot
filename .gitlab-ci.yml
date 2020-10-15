@@ -56,10 +56,10 @@ deploy_production:
   tags:
     - shell
   script:
-    - ssh vagrant@production "docker stop prod" || true
-    - ssh vagrant@production "docker rm prod" || true
+     - ssh vagrant@production "docker run -d --restart always -v $PRODUCTION_DIR:$BD_DIR -p 8000:8000 --name prod_new $IMAGE_TAG" || true
+    - ssh vagrant@production "docker stop prod && docker rm prod" || true
+    - ssh vagrant@production "docker start prod_new && docker rename prod_new prod"
     - ssh vagrant@production "docker system prune -f -a --volumes" || true
-    - ssh vagrant@production "docker pull $IMAGE_TAG && docker run -d --restart always -v $PRODUCTION_DIR:$BD_DIR -p 8000:8000 --name prod $IMAGE_TAG"
   environment:
     name: production
     url: http://localhost:8081/
