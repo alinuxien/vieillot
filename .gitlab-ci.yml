@@ -43,10 +43,13 @@ deploy_recette:
   tags:
     - shell
   script:
-    - ssh vagrant@recette "docker stop recette" || true
-    - ssh vagrant@recette "docker rm recette" || true
+    - ssh vagrant@recette "docker run -d --restart always \
+                           -v $RECETTE_DIR:$BD_DIR \
+                           -p 8000:8000 --name recette_new \
+                           $IMAGE_TAG"
+    - ssh vagrant@recette "docker stop recette && docker rm recette" || true
+    - ssh vagrant@recette "docker start recette_new && docker rename recette_new recette"
     - ssh vagrant@recette "docker system prune -f -a --volumes" || true
-    - ssh vagrant@recette "docker pull $IMAGE_TAG && docker run -d --restart always -v $RECETTE_DIR:$BD_DIR -p 8000:8000 --name recette $IMAGE_TAG"
   environment:
     name: recette
     url: http://localhost:8010/
